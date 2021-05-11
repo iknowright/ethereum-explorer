@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,12 +32,15 @@ function App() {
         alt="logo"
         width="100"
         height="100"
+        display="block"
+        margin-left="auto"
+        margin-right="auto"
       />
-      <h1 class="text-">Blockchain Explorer</h1>
+      <h1 style={{textAlign: "center"}}>Blockchain Explorer</h1>
       <NetworkId />
       <PeerCount />
       <Stats />
-      <h3> Latest 20 blocks </h3>
+      <h3 style={{textAlign: "center"}}> Latest 20 blocks </h3>
       <TransactionTableHook />
     </div>
   );
@@ -165,7 +169,7 @@ function createData(txHash, block, timestamp, gasUsed) {
 
 function TransactionTableHook() {
   const classes = useStyles();
-  return <TransactionTable hookStyle={classes.style}></TransactionTable>;
+  return <TransactionTable hookStyle={classes.table}></TransactionTable>;
 }
 
 class TransactionTable extends React.Component {
@@ -220,5 +224,9 @@ class TransactionTable extends React.Component {
     );
   }
 }
+
+TransactionTable.propTypes = {
+  hookStyle: PropTypes.any,
+};
 
 export default App;
