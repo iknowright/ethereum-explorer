@@ -10,6 +10,12 @@ import {
   Th,
   Td,
   TableCaption,
+  Image,
+  Container,
+  Heading,
+  Spacer,
+  Flex,
+  Box,
 } from "@chakra-ui/react"
 
 // Web3
@@ -20,29 +26,31 @@ import logo from './logo.png';
 import './App.css';
 
 const provider =
-  'https://mainnet.infura.io/v3/95ddb76135024471a15efebe034aa17f'; //Your Infura Endpoint
+  `https://mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_ID}`; //Your Infura Endpoint
 let web3Provider = new Web3.providers.HttpProvider(provider);
 let web3 = new Web3(web3Provider);
 
 function App() {
   return (
     <ChakraProvider>
-      <div className="App">
-        <img
+      <Container maxW="xl" centerContent>
+        <Image
+          boxSize="100px"
+          objectFit="cover"
           src={logo}
-          className="Ethereum-logo"
           alt="logo"
-          width="100"
-          height="100"
-          display="block"
-          margin-left="auto"
-          margin-right="auto"
         />
-        <h1 style={{ textAlign: "center" }}>Blockchain Explorer</h1>
-        <NetworkId />
-        <PeerCount />
+        <Heading as="h1" size="xl">
+          Blockchain Explorer
+        </Heading>
+        <Flex>
+          <NetworkId />
+          <Spacer />
+          <PeerCount />
+        </Flex>
         <Stats />
-        <h3 style={{ textAlign: "center" }}> Latest 20 blocks </h3>
+      </Container>
+      <div className="App">
         <TransactionTable />
       </div>
     </ChakraProvider>
@@ -63,10 +71,10 @@ class NetworkId extends React.Component {
 
   render() {
     return (
-      <p>
+      <Box p="2">
         <span>Network ID: </span>
         <span>{this.state.networkId}</span>
-      </p>
+      </Box>
     );
   }
 }
@@ -85,10 +93,10 @@ class PeerCount extends React.Component {
 
   render() {
     return (
-      <p>
+      <Box p="2">
         <span>Peer Count: </span>
         <span>{this.state.peerCount + 1}</span>
-      </p>
+      </Box>
     );
   }
 }
@@ -190,7 +198,7 @@ class TransactionTable extends React.Component {
   render() {
     return (
       <Table variant="simple">
-        <TableCaption>Imperial to metric conversion factors</TableCaption>
+        <TableCaption>Latest 20 Blocks</TableCaption>
         <Thead>
           <Tr>
             <Th>Transaction Hash</Th>
