@@ -1,15 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // UI
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { ChakraProvider } from "@chakra-ui/react"
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+} from "@chakra-ui/react"
 
 // Web3
 import Web3 from 'web3';
@@ -25,24 +26,26 @@ let web3 = new Web3(web3Provider);
 
 function App() {
   return (
-    <div className="App">
-      <img
-        src={logo}
-        className="Ethereum-logo"
-        alt="logo"
-        width="100"
-        height="100"
-        display="block"
-        margin-left="auto"
-        margin-right="auto"
-      />
-      <h1 style={{textAlign: "center"}}>Blockchain Explorer</h1>
-      <NetworkId />
-      <PeerCount />
-      <Stats />
-      <h3 style={{textAlign: "center"}}> Latest 20 blocks </h3>
-      <TransactionTableHook />
-    </div>
+    <ChakraProvider>
+      <div className="App">
+        <img
+          src={logo}
+          className="Ethereum-logo"
+          alt="logo"
+          width="100"
+          height="100"
+          display="block"
+          margin-left="auto"
+          margin-right="auto"
+        />
+        <h1 style={{ textAlign: "center" }}>Blockchain Explorer</h1>
+        <NetworkId />
+        <PeerCount />
+        <Stats />
+        <h3 style={{ textAlign: "center" }}> Latest 20 blocks </h3>
+        <TransactionTable />
+      </div>
+    </ChakraProvider>
   );
 }
 
@@ -157,19 +160,8 @@ class Stats extends React.Component {
   }
 }
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
-
 function createData(txHash, block, timestamp, gasUsed) {
   return { txHash, block, timestamp, gasUsed };
-}
-
-function TransactionTableHook() {
-  const classes = useStyles();
-  return <TransactionTable hookStyle={classes.table}></TransactionTable>;
 }
 
 class TransactionTable extends React.Component {
@@ -197,36 +189,31 @@ class TransactionTable extends React.Component {
 
   render() {
     return (
-      <TableContainer component={Paper}>
-        <Table className={this.props.hookStyle} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Transaction Hash</TableCell>
-              <TableCell align="right">Block</TableCell>
-              <TableCell align="right">Timestamp</TableCell>
-              <TableCell align="right">Gas Used&nbsp;(wei)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.state.rows.map((row) => (
-              <TableRow key={row.txHash}>
-                <TableCell component="th" scope="row">
-                  {row.txHash}
-                </TableCell>
-                <TableCell align="right">{row.block}</TableCell>
-                <TableCell align="right">{row.timestamp}</TableCell>
-                <TableCell align="right">{row.gasUsed}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Table variant="simple">
+        <TableCaption>Imperial to metric conversion factors</TableCaption>
+        <Thead>
+          <Tr>
+            <Th>Transaction Hash</Th>
+            <Th align="right">Block</Th>
+            <Th align="right">Timestamp</Th>
+            <Th align="right">Gas Used&nbsp;(wei)</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {this.state.rows.map((row) => (
+            <Tr key={row.txHash}>
+              <Td component="th" scope="row">
+                {row.txHash}
+              </Td>
+              <Td align="right">{row.block}</Td>
+              <Td align="right">{row.timestamp}</Td>
+              <Td align="right">{row.gasUsed}</Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
     );
   }
 }
-
-TransactionTable.propTypes = {
-  hookStyle: PropTypes.any,
-};
 
 export default App;
