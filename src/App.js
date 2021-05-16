@@ -157,12 +157,11 @@ class Stats extends React.Component {
 
   render() {
     return (
-      <p>
-        Current Block #{this.state.currentBlockNumber}:{' '}
-        {this.state.transactionCount} in {this.state.timeTaken} seconds at the
-        rate of {this.state.tps} transactions/seconds. The average gas price is{' '}
-        {this.state.gasPrice} wei.
-      </p>
+      <div>
+        <p>Current Block #{this.state.currentBlockNumber}</p>
+        <p>{this.state.transactionCount} transactions in {this.state.timeTaken} seconds at the rate of {this.state.tps.toFixed(2)} TPS</p>
+        <p>The average gas price is {this.state.gasPrice} wei.</p>
+      </div>
     );
   }
 }
