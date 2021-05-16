@@ -25,8 +25,7 @@ import Web3 from 'web3';
 import logo from './logo.png';
 import './App.css';
 
-const provider =
-  `https://mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_ID}`; //Your Infura Endpoint
+const provider = process.env.REACT_APP_BLOCKCHAIN_ENDPOINT;
 let web3Provider = new Web3.providers.HttpProvider(provider);
 let web3 = new Web3(web3Provider);
 
